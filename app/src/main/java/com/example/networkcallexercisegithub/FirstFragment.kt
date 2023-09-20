@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import com.example.networkcallexercisegithub.data.WeatherData
 import com.example.networkcallexercisegithub.databinding.FragmentFirstBinding
 
 class FirstFragment : Fragment() {
@@ -29,7 +29,7 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.button.setOnClickListener {
-            viewModel.networkCall()
+            viewModel.getWeather()
         }
 
         //TODO: CHIAMIAMO IL MutableLiveData PRESENTE NEL ViewModel E SETTIAMO UN OBSERVE.
@@ -38,15 +38,16 @@ class FirstFragment : Fragment() {
         // PIU' VISUALIZZATO A SCHERMO E SMETTE DI OSSERVARE.
 
        viewModel.result.observe(viewLifecycleOwner){
-            setCatText(it)
+            setWeatherText(it)
         }
 
     }
 
     //TODO: E' ALTAMENTE CONSIGLIATO CREARE DELLE FUNZIONI APPOSITE PER PULIZIA DEL CODICE
 
-    private fun setCatText(it: CatFactData){
-        binding.networkCallTextView.text = it.fact
+    private fun setWeatherText(it: WeatherData){
+        binding.networkCallTextView.text = it.clouds.toString()
+        binding.networkCallTextView2.text = it.weather.toString()
     }
 
 

@@ -6,7 +6,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 object RepositoryWeather {
     var weatherEndPoint: WeatherEndPoint? = null
@@ -18,14 +17,14 @@ object RepositoryWeather {
         if (weatherEndPoint == null) {
             weatherEndPoint = createRetrofitInstance().create(WeatherEndPoint::class.java)
         }
-        return weatherEndPoint?.networkCall()
+        return weatherEndPoint?.networkCall("Agrigento IT")
     }
 
 
 
     fun createRetrofitInstance(): Retrofit {
 
-        val baseUrl = "https://api.openweathermap.org/data/2.5/"
+        val baseUrl = "http://api.weatherapi.com/v1/"
         val loggingInterceptor = HttpLoggingInterceptor()
         val authInterceptor = MyInterceptor()
 

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.networkcallexercisegithub.data.WeatherData
 import com.example.networkcallexercisegithub.databinding.FragmentFirstBinding
 
 class FirstFragment : Fragment() {
@@ -28,6 +27,8 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observeData()
+
         binding.button.setOnClickListener {
             viewModel.getWeather()
         }
@@ -37,17 +38,19 @@ class FirstFragment : Fragment() {
         // VA SPECIFICATO viewLifecycleOwner PERCHE' COSI' L'OBSERVE CAPISCE QUANDO IL FRAGMENT NON E'
         // PIU' VISUALIZZATO A SCHERMO E SMETTE DI OSSERVARE.
 
-       viewModel.result.observe(viewLifecycleOwner){
-            setWeatherText(it)
-        }
+
 
     }
 
     //TODO: E' ALTAMENTE CONSIGLIATO CREARE DELLE FUNZIONI APPOSITE PER PULIZIA DEL CODICE
 
-    private fun setWeatherText(it: WeatherData){
-        binding.networkCallTextView.text = it.clouds.toString()
-        binding.networkCallTextView2.text = it.weather.toString()
+    private fun observeData(){
+        viewModel.result.observe(viewLifecycleOwner) { weatherData ->
+            if (weatherData != null) {
+                binding.networkCallTextView.text = weatherData.current?.condition?.text
+                binding.networkCallTextView2.text = "${weatherData.current?.tempC} °"
+            }
+        }
     }
 
 

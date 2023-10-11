@@ -1,13 +1,13 @@
-package com.example.networkcallexercisegithub
+package com.example.networkcallexercisegithub.data.network
 
 import com.example.networkcallexercisegithub.data.WeatherData
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface WeatherEndPoint {
+interface WeatherService {
 
     @GET("current.json")
-    suspend fun networkCall(@Query ("q") query: String) : Response<WeatherData>
+    suspend fun getWeather(@Query ("q") query: String) : Response<WeatherData>
 
 }
